@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,15 +18,34 @@ class User extends Authenticatable implements FilamentUser
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     public function canAccessPanel(Panel $panel): bool
-{
-    return in_array($this->role, ['admin', 'operator'], true);
-}
+    {
+        return in_array($this->role, ['admin', 'operator'], true);
+    }
+
+    /**
+     * Check whether this user is the last administrator.
+     */
+    public function isLastAdmin(): bool
+    {
+        return $this->role === 'admin'
+            && ! self::query()
+                ->where('role', 'admin')
+                ->whereKeyNot($this->getKey())
+                ->exists();
+    }
+
+    /**
+     * Check whether another administrator exists.
+     */
+    public function hasOtherAdmin(): bool
+    {
+        return self::query()
+            ->where('role', 'admin')
+            ->whereKeyNot($this->getKey())
+            ->exists();
+    }
+
     protected function casts(): array
     {
         return [
