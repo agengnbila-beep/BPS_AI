@@ -1,0 +1,52 @@
+@import "../../../vendor/filament/filament/resources/css/theme.css";
+
+@source '../../../app/Filament/**/*.php';
+@source '../../../resources/views/**/*.blade.php';
+@source '../../../vendor/filament/**/*.blade.php';
+
+/* Tema CP-BPS Batanghari */
+:root {
+    --cpbps-blue: #1769d2;
+    --cpbps-navy: #173b68;
+    --cpbps-light: #eef5ff;
+}
+
+.fi-body {
+    background: #f6f9fe;
+}
+
+.fi-topbar {
+    border-bottom: 1px solid #dce7f5;
+    box-shadow: 0 2px 10px rgb(23 59 104 / 5%);
+}
+
+.fi-sidebar {
+    border-right: 1px solid #e1eaf5;
+    background: #fff;
+}
+
+.fi-sidebar-item-active > .fi-sidebar-item-btn {
+    background: var(--cpbps-light);
+    color: var(--cpbps-blue);
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.fi-btn-color-primary {
+    box-shadow: 0 3px 8px rgb(23 105 210 / 14%);
+}
+
+.fi-section,
+.fi-ta-ctn {
+    border-color: #e3ebf5;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgb(23 59 104 / 4%);
+}
+
+.fi-sidebar-item-btn,
+.fi-btn {
+    transition:
+        background-color 150ms ease,
+        color 150ms ease;
+}
+
